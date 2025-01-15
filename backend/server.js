@@ -5,6 +5,8 @@ import cors from 'cors';
 import authRoutes from './routes/auth.js';
 import courseRoutes from './routes/course.js';
 import cookieParser from 'cookie-parser';
+import fileRoutes from './routes/fileRoutes.js';
+import fileUploadRouter from './routes/fileUpload.js'; 
 
 
 dotenv.config();
@@ -23,6 +25,8 @@ mongoose
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/courses', courseRoutes);
+app.use('/api/files', fileRoutes);
+app.use('/api/upload', fileUploadRouter);
 
 // Start server
 const PORT = process.env.PORT || 5000;
