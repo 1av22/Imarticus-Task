@@ -1,5 +1,4 @@
 import FileMetadata from '../models/FileMetadata.js'; // Import the file metadata model
-import FileSummary from '../models/FileSummary.js'; // Import the file summary model
 
 // Controller method to get the summary of a file
 export const getFileSummary = async (req, res) => {
