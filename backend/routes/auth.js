@@ -37,7 +37,7 @@ router.post('/login', async (req, res) => {
         await user.save();
         res.cookie('token', sessionToken, { httpOnly: true, secure: process.env.NODE_ENV === 'production', maxAge: 3600000 });
 
-        res.status(200).json({ message: 'User logged in successfully' });
+        res.status(200).json({ message: 'User logged in successfully' , token: sessionToken});
     } catch (err) {
         res.status(500).json({ error: `Error logging in : ${err}` });
     }
