@@ -1,7 +1,6 @@
 import express from 'express';
 import jwt from 'jsonwebtoken';
 import Course from '../models/Course.js';
-import Module from '../models/Module.js';
 import { isAuthenticated } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
