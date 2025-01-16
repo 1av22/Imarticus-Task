@@ -27,7 +27,7 @@ function CoursePage() {
 
         const fetchCourseData = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/courses', {
+                const response = await axios.get('https://imarticus-task.onrender.com/api/courses', {
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 setCourse(response.data[0]); // Assuming only one course
