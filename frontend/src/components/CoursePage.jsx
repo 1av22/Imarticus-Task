@@ -27,7 +27,7 @@ function CoursePage() {
 
         const fetchCourseData = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/courses', {
+                const response = await axios.get('http//imarticus-task.onrender.com/api/courses', {
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 setCourse(response.data[0]); // Assuming only one course
@@ -38,7 +38,7 @@ function CoursePage() {
 
         const fetchFilesData = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/files/all', {
+                const response = await axios.get('https://imarticus-task.onrender.com/api/files/all', {
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 setFiles(response.data);
@@ -59,7 +59,7 @@ function CoursePage() {
     const handleShowSummary = async (fileId) => {
         const token = localStorage.getItem('token');
         try {
-            const response = await axios.get(`http://localhost:5000/api/files/summary/${fileId}`, {
+            const response = await axios.get(`https://imarticus-task.onrender.com/api/files/summary/${fileId}`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
             setFileSummary(response.data.summaryText);
@@ -91,7 +91,7 @@ function CoursePage() {
         formData.append('file', newFile);
 
         try {
-            const response = await axios.post('http://localhost:5000/api/upload/', formData, {
+            const response = await axios.post('https://imarticus-task.onrender.com/api/upload/', formData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                     'Content-Type': 'multipart/form-data',
@@ -106,7 +106,8 @@ function CoursePage() {
         }
     };
 
-    if (!course) return <div>Loading...</div>;
+    // Check if course or files are not loaded, show a loading state
+    if (!course || !files) return <div>Loading...</div>;
 
     return (
         <>
@@ -130,14 +131,14 @@ function CoursePage() {
                     <p className="text-center mb-4">{course.description}</p>
 
                     <Accordion defaultActiveKey="0">
-                        {course.modules.map((module, index) => (
+                        {course.modules && course.modules.map((module, index) => (
                             <Accordion.Item eventKey={String(index)} key={module._id}>
                                 <Accordion.Header>
                                     <h4>{module.title}</h4>
                                 </Accordion.Header>
                                 <Accordion.Body>
                                     <ListGroup variant="flush">
-                                        {module.videos.map((video) => (
+                                        {module.videos && module.videos.map((video) => (
                                             <ListGroup.Item key={video._id}>
                                                 <strong>{video.title}</strong> - {video.duration}
                                                 <br />
@@ -156,7 +157,7 @@ function CoursePage() {
                     <div className="mt-5">
                         <h3>Uploaded Files</h3>
                         <ListGroup>
-                            {files.map((file) => (
+                            {files && files.map((file) => (
                                 <ListGroup.Item key={file._id}>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                         <div>

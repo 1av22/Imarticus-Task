@@ -10,7 +10,7 @@ function LoginPage() {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:5000/api/auth/login', { email, password });
+            const response = await axios.post('https://imarticus-task.onrender.com/api/auth/login', { email, password });
             localStorage.setItem('token', response.data.token);
             navigate('/home'); // Redirect to home after successful login
         } catch (err) {

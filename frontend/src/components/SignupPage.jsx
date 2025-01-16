@@ -11,7 +11,7 @@ function SignupPage() {
     const handleSignup = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('http://localhost:5000/api/auth/signup', { name, email, password });
+            await axios.post('https://imarticus-task.onrender.com/api/auth/signup', { name, email, password });
             navigate('/login'); // Redirect to login page after successful signup
         } catch (err) {
             console.error('Signup failed:', err);
