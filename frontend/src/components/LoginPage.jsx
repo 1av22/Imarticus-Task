@@ -12,7 +12,7 @@ function LoginPage() {
         try {
             const response = await axios.post('https://imarticus-task.onrender.com/api/auth/login', { email, password });
             localStorage.setItem('token', response.data.token);
-            navigate('/home'); // Redirect to home after successful login
+            navigate('/enroll'); // Redirect to home after successful login
         } catch (err) {
             console.error('Login failed:', err);
         }

@@ -1,7 +1,15 @@
 import React from "react";
 import { Container } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 function MyCaptain() {
+
+    const navigate = useNavigate();
+
+    const navigateTocourse = () => {
+        navigate('/home');
+    }
+
     return (
         <Container className="text-center mt-5" id="overview">
             <img src="https://webcdn.imarticus.org/myCaptainDM/mycaptain-logo_11.svg" alt="Logo" />
@@ -109,6 +117,7 @@ function MyCaptain() {
             <div className="enroll_btn" style={{ marginTop: "20px" }}>
                 <div style={{ display: "flex", width: "70%", margin: "0 auto", gap: "10px" }}>
                     <button
+                        onClick={navigateTocourse} // Corrected here
                         style={{
                             flex: 1,
                             backgroundColor: "rgb(255, 122, 79)",
