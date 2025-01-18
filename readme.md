@@ -13,3 +13,13 @@
    - **ID**: test@test.com
    - **Password**: test
 2. After uploading any document, you need to re-login.
+
+
+## Phase 2 
+
+1. Added the course page.
+2. Login to view the page.
+3. When on the course view page click on ```Apply Now``` to go to the course material.
+4. Videos Now open in an embedded ```iframe```.
+
+*Note:* Could not integrate the razorpay part as it was asking for an organization address and scheme.
