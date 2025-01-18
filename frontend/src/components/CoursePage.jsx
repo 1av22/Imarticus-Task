@@ -11,17 +11,17 @@ function CoursePage() {
     const [selectedFile, setSelectedFile] = useState(null);
     const [newFile, setNewFile] = useState(null);
     const [isAdmin, setIsAdmin] = useState(false);
+    const [showVideoModal, setShowVideoModal] = useState(false);
+    const [selectedVideoUrl, setSelectedVideoUrl] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
         const token = localStorage.getItem('token');
-        // Check if token exists, if not redirect to login
         if (!token) {
             navigate('/login');
             return;
         }
 
-        // Decode token to check if user is admin
         const decoded = JSON.parse(atob(token.split('.')[1]));
         setIsAdmin(decoded.isAdmin);
 
@@ -30,7 +30,7 @@ function CoursePage() {
                 const response = await axios.get('https://imarticus-task.onrender.com/api/courses', {
                     headers: { Authorization: `Bearer ${token}` },
                 });
-                setCourse(response.data[0]); // Assuming only one course
+                setCourse(response.data[0]);
             } catch (err) {
                 console.error('Error fetching course data:', err.response ? err.response.data : err);
             }
@@ -106,7 +106,16 @@ function CoursePage() {
         }
     };
 
-    // Check if course or files are not loaded, show a loading state
+    const handleVideoClick = (videoUrl) => {
+        setSelectedVideoUrl(videoUrl);
+        setShowVideoModal(true);
+    };
+
+    const handleCloseVideoModal = () => {
+        setShowVideoModal(false);
+        setSelectedVideoUrl(null);
+    };
+
     if (!course || !files) return <div>Loading...</div>;
 
     return (
@@ -142,9 +151,9 @@ function CoursePage() {
                                             <ListGroup.Item key={video._id}>
                                                 <strong>{video.title}</strong> - {video.duration}
                                                 <br />
-                                                <a href={video.url} target="_blank" rel="noopener noreferrer">
+                                                <Button variant="link" onClick={() => handleVideoClick(video.url)}>
                                                     Watch
-                                                </a>
+                                                </Button>
                                             </ListGroup.Item>
                                         ))}
                                     </ListGroup>
@@ -200,6 +209,26 @@ function CoursePage() {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleCloseSummary}>Close</Button>
+                </Modal.Footer>
+            </Modal>
+
+            {/* Video Modal */}
+            <Modal show={showVideoModal} onHide={handleCloseVideoModal} size="lg">
+                <Modal.Header closeButton>
+                    <Modal.Title>Video</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <iframe
+                        width="100%"
+                        height="400"
+                        src={selectedVideoUrl}
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                    ></iframe>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseVideoModal}>Close</Button>
                 </Modal.Footer>
             </Modal>
         </>
